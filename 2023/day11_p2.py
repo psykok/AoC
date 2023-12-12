@@ -49,16 +49,14 @@ counter=0
 nb_rows=np.shape(mymap)[0]
 xflat=mymap.sum(axis=0)
 pos=0
-poslist=[]
+x_poslist=[]
 for x in xflat:
   if x==0:
-    poslist.append(pos)
+    x_poslist.append(pos)
   pos+=1
-poslist.reverse()
-for i in poslist:
-  for exp in range (99999):
-    mymap=np.insert(mymap,i,np.zeros(nb_rows),axis=1)
+
 print(xflat)
+print(x_poslist)
 #print(mymap.sum(axis=0))
 #print(mymap)
 
@@ -67,16 +65,17 @@ nb_col=np.shape(mymap)[1]
 xflat=np.array([])
 xflat=mymap.sum(axis=1)
 pos=0
-poslist=[]
+y_poslist=[]
 for x in xflat:
   if x==0:
-    poslist.append(pos)
+    y_poslist.append(pos)
   pos+=1
-poslist.reverse()
-for i in poslist:
-  for exp in range (99999):
-    mymap=np.insert(mymap,i,np.zeros(nb_col),axis=0)
+#poslist.reverse()
+#for i in poslist:
+#  for exp in range (2):
+#    mymap=np.insert(mymap,i,np.zeros(nb_col),axis=0)
 print(xflat)
+print(y_poslist)
 #print(mymap)
 #print(mymap.sum(axis=1))
 
@@ -86,26 +85,31 @@ arr=np.stack(np.nonzero(mymap), axis=-1)
 cnt=0
 total=0
 
-#print(list(comb(mymap,2)))
-#print(tmp)
 tmp=[]
+exp_factor=999999
+
 for a in range(len(arr)):
-   tmp.append((int(arr[a][0]),int(arr[a][1])))
-#print(tmp)
+   x=int(arr[a][1])
+   oldx=x
+   xexp=0
+   for xpos in x_poslist:
+     if xpos < x:
+        xexp+=exp_factor
+   x+=xexp
+   #################
+   y=int(arr[a][0])
+   oldy=y
+   yexp=0
+   for ypos in y_poslist:
+     if ypos < y:
+        yexp+=exp_factor
+   y+=yexp
+   print("(",oldx,",",x,"),(",oldy,",",y,")")
+   tmp.append((x,y))
+print(tmp)
 total=0
 for i in list(comb(tmp,2)):
   #print(i)
   total+=sum(abs(np.subtract(i[1],i[0])))
 print(total)
 
-#    if a != b:
-#     
-#      niak=(int(arr[b][0])-int(arr[a][0]))+(int(arr[b][1])-int(arr[a][1]))
-#      if(niak>0):
-#        print(arr[a],arr[b])
-#        total+=niak
-#        print(niak)
-#        cnt+=1
-#
-#print(total)
-#print(cnt)

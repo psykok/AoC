@@ -13,7 +13,7 @@ from scipy.sparse.csgraph import shortest_path
 def find_indices_of_substring(full_string, sub_string):
     return [index for index in range(len(full_string)) if full_string.startswith(sub_string, index)]
 
-f = open('day11_input.txt', 'r')
+f = open('day11_example.txt', 'r')
 lines = f.readlines()
 
 
@@ -92,7 +92,7 @@ for a in range(len(arr)):
 print(tmp)
 total=0
 for i in list(comb(tmp,2)):
-  print(i)
+  #print(i)
   total+=sum(abs(np.subtract(i[1],i[0])))
 print(total)
 
