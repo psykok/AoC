@@ -2,12 +2,13 @@
 
 import re
 import json
+import numpy as np
 
 f = open('day2_input.txt', 'r')
 lines = f.readlines()
 
 myrecords={}
-content=[]
+content=np.array([])
 mylist=[] #red,gree,blue
 total=[]
 for line in lines:
@@ -19,7 +20,7 @@ for line in lines:
 
   for i in value.split(";"):
     red=blue=green=0
-    mylist.clear()
+    mylist=[]
     for j in i.split(","):
       j=j.strip()
       nb, color=j.split(" ")
@@ -36,16 +37,18 @@ for line in lines:
         green=int(nb)
         if nb >13:
           compat=0
-    mylist.append(red)
-    mylist.append(green)
-    mylist.append(blue)
-    content.append(json.dumps(mylist))
+    mylist=np.append(mylist,red)
+    mylist=np.append(mylist,green)
+    mylist=np.append(mylist,blue)
+    if np.any(content) == False:
+      content=mylist
+    else:
+      content=np.vstack((content,mylist))
+    
  #   print(keyid,mylist,content)
-  myrecords[keyid.strip()]=json.dumps(content)
-#  print(content)
-  content.clear()
-  if compat==1:
-    total.append(int(keyid.strip()))
-#print(myrecords)
+  total.append(np.prod(content.max(axis=0)))
+  myrecords[keyid.strip()]=content
+  content=[]
+print(myrecords)
 print(total)
 print(sum(total))
