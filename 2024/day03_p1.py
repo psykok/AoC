@@ -4,8 +4,8 @@ import sys
 np.set_printoptions(threshold=sys.maxsize)
 
 
-#myinput="day03_example.txt"
-myinput="day03_input.txt"
+myinput="day04_example.txt"
+#myinput="day03_input.txt"
 
 f = open(myinput, 'r')
 lines = f.readlines()
